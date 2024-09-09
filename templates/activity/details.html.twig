@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{activity.activityName}} {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center mt-3">Sortie "{{activity.activityName}}"</h1>
+
+        <div class="mt-5 justify-content-center">
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Nom de la sortie:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.activityName}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Organisée par:</label>
+                <div class="col-md-9">
+                    <a href="{{ path('user_index', {'id': activity.organizer.id}) }}" class="form-control bg-a" target="_blank">{{ activity.organizer.firstName|title }} {{ activity.organizer.lastName|upper }}</a>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Date et heure de la sortie:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.dateTimeStart|date('d-m-Y à H:i')}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Date limite d'inscription</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.dateLimitInscription|date('d-m-Y')}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Nombre d'inscrits:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{ activity.users.count() }} / {{ activity.nbMaxIncriptions }}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Durée:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.duration}} minutes">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Campus:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.campus.campusName}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Ville:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.place.cities.cityName}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Code postal:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.place.cities.postCode}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Lieu:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.place.placeName}}">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Rue:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" value="{{activity.place.street}} ({{activity.place.longitude}}, {{activity.place.latitude}})">
+                </div>
+            </div> 
+            <div class="row mb-2">
+                <label for="activityName" class="col-md-3 col-form-label">Description et infos:</label>
+                <div class="col-md-9">
+                    <input type="text" readonly disabled class="form-control" id="staticEmail" rows="5" value="{{activity.activityDescription}}">
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            {% if app.user == activity.organizer %}
+                <a href="{{ path('sortie_modifier', {'id': activity.id}) }}" class="btn btn-success">Modifier</a>
+            {% elseif activity.users.contains(app.user) %}
+                <a href="{{ path('sortie_desinscription', {'id': activity.id}) }}" class="btn btn-danger">Se désinscrire</a>
+            {% else %}
+                <a href="{{ path('sortie_inscription', {'id': activity.id}) }}" class="btn btn-success">S'inscrire</a>
+            {% endif %}
+                <a href="{{ path('main_home') }}" class="btn btn-dark">Retour</a>
+
+        </div>
+
+
+        <h2 class="text-center mt-5">Liste des participants inscrits</h2>
+        {% if users is empty %}
+            <div class="text-center">
+                <h4 class="fst-italic fw-light">Aucun participant pour le moment... <a href="{{ path('sortie_inscription', {'id': activity.id}) }}">soyez le premier !</a></h4>
+            </div>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Nom</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.lastname|upper }} {{ user.firstname|title }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

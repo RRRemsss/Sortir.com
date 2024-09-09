@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mise à jour du profil{% endblock %}
+
+{% block body %}
+    <!-- Début du formulaire de mise à jour du profil avec l'attribut enctype pour permettre l'envoi de fichiers -->
+    {{ form_start(updateForm, {'attr': {'enctype': "multipart/form-data"}}) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="pfp">
+                    <!-- Affichage de l'image de profil actuelle de l'utilisateur si elle existe, sinon affichage d'une image par défaut -->
+                    {% if userimage.image is not null  %}
+                        <img class="card-img-top custom-image" src="{{asset('images/profilpictures/' ~ userimage.image)}}" alt="photo de profil">
+                    {% else %}
+                        <img src="{{ asset('images/blank_image/blankpp.png') }}" alt="photo de profil" class="card-img-top custom-image"/>
+                    {% endif %}
+                    <!-- Titre de la page avec le nom d'utilisateur de la personne dont on modifie le profil -->
+                    <h2>Modification du profil de {{ userimage.username }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <!-- Champ pour le téléchargement d'une nouvelle image de profil -->
+                    {{ form_label(updateForm.imageFile) }}
+                    <div class="col-md-12 text-center">
+                        {{ form_widget(updateForm.imageFile) }}
+                    </div>
+                    <!-- Affichage des erreurs éventuelles liées au champ imageFile -->
+                    {% if form_errors(updateForm.imageFile) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.imageFile) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Affichage des messages flash de type "warning" si ils existent -->
+                {% for message in app.flashes('warning') %}
+                    <div class="alert alert-warning mt-4">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <!-- Champ pour la modification du nom d'utilisateur -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.username) }}
+                    {{ form_widget(updateForm.username) }}
+                    {% if form_errors(updateForm.username) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.username) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Champ pour la modification du nom de famille -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.lastname) }}
+                    {{ form_widget(updateForm.lastname) }}
+                    {% if form_errors(updateForm.lastname) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.lastname) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Champ pour la modification du prénom -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.firstname) }}
+                    {{ form_widget(updateForm.firstname) }}
+                    {% if form_errors(updateForm.firstname) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.firstname) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Emplacement pour ajouter d'autres champs à gauche si besoin -->
+            </div>
+            <div class="col-md-6">
+                <!-- Champ pour la modification du numéro de téléphone -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.phoneNumber) }}
+                    {{ form_widget(updateForm.phoneNumber) }}
+                    {% if form_errors(updateForm.phoneNumber) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.phoneNumber) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Champ pour la modification de l'adresse email -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.email) }}
+                    {{ form_widget(updateForm.email) }}
+                    {% if form_errors(updateForm.email) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.email) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Champ pour la modification du campus -->
+                <div class="form-group mb-3">
+                    {{ form_label(updateForm.campus) }}
+                    {{ form_widget(updateForm.campus) }}
+                    {% if form_errors(updateForm.campus) %}
+                        <div class="text-danger">
+                            {{ form_errors(updateForm.campus) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Emplacement pour ajouter d'autres champs à droite si besoin -->
+
+                <!-- Fin du formulaire -->
+                {{ form_end(updateForm) }}
+            </div>
+            <div class="col-md-12 text-center">
+                <!-- Bouton de soumission du formulaire -->
+                <button type="submit" class="btn btn-success my-3">Modifier</button>
+                <!-- Lien de retour vers la page d'accueil -->
+                <a href="{{ path('main_home') }}" class="btn btn-dark mt-0">Retour</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

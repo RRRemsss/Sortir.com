@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Accueil{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="text-end mt-5">
+                <p>Date du jour : {{ 'now'|format_datetime(pattern='dd MMMM Y', locale='fr') }}</p>
+            </div>
+            <div class="text-start">
+                <p style="font-size: 24px"> Bienvenue {{ user.firstname ~ ' ' ~ user.lastname|slice(0, 1) }} !
+                    <i class="fa-solid fa-hand-peace"></i></p>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="row col-6">
+                {{ form_start(form) }}
+                {{ form_row(form.campus) }}
+                <div class="input-group mb-3">
+                    {{ form_widget(form.activityName, { 'attr': {'class': 'form-control'} }) }}
+                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+                {{ form_row(form.filterDateMin) }}
+                {{ form_row(form.filterDateMax) }}
+            </div>
+            <div class="col col-6 text-start">
+                {{ form_row(form.checkboxOrganizer) }}
+                {{ form_row(form.checkBoxBooked) }}
+                {{ form_row(form.checkBoxNotBooked) }}
+                {{ form_row(form.activityPassed) }}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Rechercher</button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">Inscrits/places</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for activity in activities %}
+
+                    <tr>
+                        <th scope="row">{{ activity.activityname }}</th>
+                        <td> {{ activity.dateTimeStart | date('d-m-Y H:i:s') }} </td>
+                        <td> {{ activity.dateLimitInscription| date('d-m-Y') }} </td>
+                        <td> {{ activity.users.count() }} / {{ activity.nbMaxIncriptions }} </td>
+                        <td> {{ activity.status.statusStatement }} </td>
+                        <td>
+                            {% if activity.users.contains(app.user) %} X
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('user_index', {'id': activity.organizer.id}) }}">
+                                {{ activity.organizer.firstName }} {{ activity.organizer.lastName|slice(0, 1) }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if activity.organizer == app.user %}
+                                <a href="{{ path('sortie_modifier', {'id': activity.id}) }}" title="Modifier">
+                                    <i class="fa-solid fa-pen" style="color: black"></i></a>
+                            {% else %}
+                                <a href="{{ path('sortie_detail', {'id': activity.id}) }}" title="Afficher">
+                                    <i class="fa-solid fa-table-list" style="color: black"></i></a>
+                            {% endif %}
+                            {% if not activity.users.contains(app.user)
+                                and activity.users.count() < activity.nbMaxIncriptions
+                                and activity.status.statusStatement == "Ouverte"
+                                and activity.organizer != app.user %}
+                                <a href="{{ path('sortie_inscription', {'id': activity.id}) }}" title="S'inscrire">
+                                    <i class="fa-solid fa-check" style="color: black"></i></a>
+                            {% elseif activity.users.contains(app.user)
+                                and activity.dateTimeStart > 'now'
+                                and activity.dateLimitInscription > 'now'
+                                and activity.organizer != app.user %}
+                                <a href="{{ path('sortie_desinscription', {'id': activity.id}) }}"
+                                   title="Se désinscrire">
+                                    <i class="fa-sharp fa-solid fa-xmark" style="color: black"></i></a>
+                            {% endif %}
+                            {% if activity.organizer == app.user
+                                and activity.status.statusStatement == "Ouverte" %}
+                                <a href="{{ path('sortie_cancel', {'id': activity.id}) }}" title="Annuler">
+                                    <i class="fa-solid fa-trash"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% if activities is empty %}
+            <p>Aucune sortie trouvée avec les critère de recherches</p>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ORGANIZER') %}
+            <a href="{{ path('sortie_create') }}" class="btn btn-success">Creer une sortie</a>
+        {% endif %}
+    </div>
+{% endblock %}

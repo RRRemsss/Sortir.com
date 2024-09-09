@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Profil{% endblock %}
+
+{% block body %}
+    {% if user is defined and user is not null %}
+        <!-- Affichage du profil de l'utilisateur -->
+        <div class="container">
+            <section class="mx-auto my-5" style="max-width: 23rem;">
+                <div class="card testimonial-card mt-2 mb-3">
+                    <div class="card-up gradient" onload="generate()"></div>
+                    <div class="avatar mx-auto white">
+                        <!-- Affichage de la photo de profil de l'utilisateur -->
+                        {% if user.image is not null%}
+                            <img src="{{asset('images/profilpictures/' ~ user.image)}}" class="rounded-circle img-fluid custom-image_2" alt="Photo de profil">
+                        {% else %}
+                            <img src="{{ asset('images/blank_image/blankpp.png') }}" alt="profile-pic" class="rounded-circle img-fluid custom-image_2"/>
+                        {% endif %}
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- Affichage des informations de l'utilisateur -->
+                        <h4 class="card-title font-weight-bold"><strong class="d-inline-block">{{ user.username}}</strong></h4>
+                        <hr>
+                        <p><i class="bi bi-person-circle"></i> <strong class="d-inline-block">Nom :</strong> {{ user.firstname}} <span class="text-uppercase">{{ user.lastname|default('undefined') }}</span></p>
+                        <hr>
+                        <p><i class="bi bi-envelope-at"></i> <strong class="d-inline-block">Email :</strong> {{ user.email}}</p>
+                        <hr>
+                        <p><i class="bi bi-phone"></i> <strong class="d-inline-block">N°:</strong> {{ user.phoneNumber}}</p>
+                        <hr>
+                        <p><i class="bi bi-building"></i> <strong class="d-inline-block">Campus :</strong><span class="text-uppercase"> {{ app.user.campus.campusName}}</span></p>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="custom-div">
+                        <!-- Affichage du bouton "Modifier" uniquement si l'utilisateur connecté est le propriétaire du profil -->
+                        {% if app.user.id == currentId %}
+                            <a href="{{ path('user_update', {'id': user.id}) }}" type="button" class="btn btn-success my-3">Modifier</a>
+                        {% endif %}
+                        <!-- Bouton de retour vers la page d'accueil -->
+                        <a href="{{ path('main_home') }}" type="button" class="btn btn-dark mt-0">Retour</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    {% else %}
+        <!-- Affichage d'un message d'erreur si l'utilisateur n'existe pas -->
+        <div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                <img src="https://media1.tenor.com/m/dWTaM2MSZx4AAAAC/cat-cats.gif" class="img-fluid custom-image_2" alt="Photo de profil">
+                <p class="fs-3"> <span class="text-danger">Oups!</span> Une erreur est survenue !</p>
+                <p class="lead">
+                    Le profile que vous rechercher n'existe pas.
+                </p>
+                <!-- Bouton de retour vers la page d'accueil -->
+                <a href="{{ path('main_home') }}" class="btn btn-dark mt-0">Retour</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

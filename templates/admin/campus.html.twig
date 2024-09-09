@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin Campus{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-3">Gestion des campus</h1>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Campus</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for campus in campus %}
+            <tr>
+                <th scope="row">{{campus.id}}</th>
+                <form method="post" action="{{ path('admin_update_campus', {'id': campus.id}) }}">
+                    <td>
+                        <input type="text" name="campusName" value="{{ campus.campusName }}" class="input-admin">
+                    </td>
+                    <td class="justify-content-end">
+                        <button type="submit" class="valider"><i class="fa-solid fa-check"></i></button>
+                </form>
+                    <a href="#" onclick="confirmDelete('{{ path('admin_delete_campus', {'id': campus.id}) }}')" class=""><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            {# nouveau form ajout #}
+            <tr>
+                <th scope="row">#</th>
+                <form method="post" action="{{ path('admin_create_campus') }}">
+                    <td>
+                        <input type="text" name="campusName" placeholder="Nom du campus" class="input-admin">
+                    </td>
+                    <td class="justify-content-end">
+                        <button type="submit" class="valider"><i class="fa-solid fa-plus"></i></button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-dark">Retour</a>
+    {# <a href="{{ path('campus_create') }}" class="btn btn-success">Ajouter</a>  #}
+
+</div>
+
+<script>
+    function confirmDelete(url) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer ce campus ?')) {
+            window.location.href = url;
+        }
+    }
+</script>
+{% endblock %}

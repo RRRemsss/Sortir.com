@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Dashboard{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1 class="text-center mt-3">Admin dashboard</h1>
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+            <a href="{{ path('admin_villes') }}" class="card-hover text-center picto" title="Gestion des villes">
+                <i class="fa-solid fa-city"></i>
+            </a>
+                <div class="card-body">
+                    <h4 class="card-title">Gestion des villes</h4>
+                    <h6 class="card-subtitle">Ajouter, Modifier, Supprimer</h6>
+                    <a href="{{ path('admin_villes') }}" class="btn btn-success mt-2">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+            <a href="{{ path('admin_campus') }}" class="card-hover text-center picto" title="Gestion des campus">
+                <i class="fa-solid fa-school"></i>
+            </a>
+                <div class="card-body">
+                    <h4 class="card-title">Gestion des campus</h4>
+                    <h6 class="card-subtitle">Ajouter, Modifier, Supprimer</h6>
+                    <a href="{{ path('admin_campus') }}" class="btn btn-success mt-2">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+            <a href="{{ path('admin_users') }}" class="card-hover text-center picto" title="Gestion des utilisateurs">
+                <i class="fa-solid fa-users"></i>
+            </a>
+                <div class="card-body">
+                    <h4 class="card-title">Gestion des utilisateurs</h4>
+                    <h6 class="card-subtitle">Ajouter, Modifier, Supprimer</h6>
+                    <a href="{{ path('admin_users') }}" class="btn btn-success mt-2">Accéder</a>
+                </div>
+            </div>
+        </div>
+        {# <div class="col-lg-3 mb-4">
+            <div class="card">
+            <a href="#" class="card-hover text-center picto" title="EasyAdmin" target="_blank">
+                <i class="fa-solid fa-gears"></i>
+            </a>
+                <div class="card-body">
+                    <h4 class="card-title">EasyAdmin</h4>
+                    <h6 class="card-subtitle">Accéder au panel easyadmin</h6>
+                    <a href="#" class="btn btn-dark mt-2" target="_blank">EasyAdmin</a>
+                </div>
+            </div>
+        </div> #}
+    </div>
+</div>
+{% endblock %}

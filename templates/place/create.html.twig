@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Nouveau lieu{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mt-3">Ajouter un nouveau lieu</h1>
+
+    <div class="container">
+        {{ form_start(placeForm) }}
+        {{ form_widget(placeForm) }}
+
+        <a href="{{ path('sortie_create') }}" class="btn btn-dark">Retour</a>
+        <button class="btn btn-success">Ajouter</button>
+        {{ form_end(placeForm) }}
+    </div>
+{% endblock %}

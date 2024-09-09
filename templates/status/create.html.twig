@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | City create{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mt-3">Place create</h1>
+
+    <div class="container">
+        {{ form_start(placeForm) }}
+        {{ form_widget(placeForm) }}
+
+        <button class="btn btn-success">Ajouter</button>
+        {{ form_end(placeForm) }}
+    </div>
+{% endblock %}

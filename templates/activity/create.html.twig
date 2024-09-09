@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}|Creation d'une sortie{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="text-center mt-3">Créer une sortie</h1>
+        {{ form_start(activityForm) }}
+        {{ form_row(activityForm.activityName) }}
+        {{ form_row(activityForm.dateTimeStart) }}
+        {{ form_row(activityForm.dateLimitInscription) }}
+        {{ form_row(activityForm.nbMaxIncriptions) }}
+        {{ form_row(activityForm.duration) }}
+        {{ form_row(activityForm.activityDescription) }}
+
+        <div class="form-group">
+            <label for="campusName">Campus:</label>
+            <div class="form-control bg-mutted" id="campusName">{{ activity.campus.campusName }}</div>
+        </div>
+
+        {{ form_row(activityForm.city) }}
+        {% if activityForm.postalCode is defined %}
+            {{ form_row(activityForm.postalCode) }}
+        {% endif %}
+
+        
+        {% if activityForm.place is defined %}
+            <div class="form-group">
+                <div class="d-flex align-items-center">
+                    {{ form_label(activityForm.place) }}
+                    <a href="{{ path('place_create') }}" class="add"><i class="fa-solid fa-circle-plus"></i></a>
+                </div>
+                <div>
+                    <div class="mb-3">
+                        {{ form_widget(activityForm.place) }}
+                    </div>
+                </div>
+            </div>
+
+            {% if activityForm.street is defined and activityForm.latitude is defined and activityForm.longitude is defined %}
+                {{ form_row(activityForm.street) }}
+                {{ form_row(activityForm.latitude) }}
+                {{ form_row(activityForm.longitude) }}
+            {% endif %}
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <div class="d-inline-block">
+                    {{ form_row(activityForm.submit) }}
+                </div>
+                <div class="d-inline-block">
+                    <a href="{{ path('main_home') }}" class="btn btn-dark mt-0">Annuler</a>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(activityForm) }}
+
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajouter un Campus{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mt-3">Ajouter un nouveau Campus</h1>
+    <div class="container">
+        {#todo: afficher le formulaire de création #}
+        {{ form_start(campusForm) }}
+        {{ form_widget(campusForm) }}
+
+        <a href="{{ path('admin_campus') }}" class="btn btn-dark">Retour</a>
+        <button class="btn btn-success">Ajouter</button>
+        {{ form_end(campusForm) }}
+    </div>
+{% endblock %}

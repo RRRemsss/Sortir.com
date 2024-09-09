@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Sortie cancel{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 class="text-center mb-5 mt-5">Annuler une sortie</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4 text-center form-group">
+                    <label for="activityName" class="form-label text-start">Nom de la sortie :</label>
+                    <input type="text" id="activityName" class="form-control"  value="{{ sortie.activityName }}" disabled>
+
+                    <label for="dateLimitInscription" class="form-label text-start">Date de la sortie :</label>
+                    <input type="text" id="dateLimitInscription" class="form-control" value="{{ sortie.dateLimitInscription|date('d/m/Y') }}" disabled>
+
+                    <label for="campus" class="form-label text-start">Campus :</label>
+                    <input type="text" id="campus" class="form-control" value="{{ sortie.campus.campusName }}" disabled>
+
+                    <label for="place" class="form-label text-start">Lieu :</label>
+                    <input type="text" id="place" class="form-control" value="{{ sortie.place.placeName }} {{ sortie.place.street }}" disabled>
+
+                    {{ form_start(cancelForm) }}
+
+                    {{ form_row(cancelForm.reason) }}
+                    <div class="row mt-4">
+                        <div class="col">
+                            {{ form_row(cancelForm.submit) }}
+                        </div>
+                        <div class="col">
+                            <a href="{{ path('main_home') }}" class="btn btn-dark">Annuler</a>
+                        </div>
+                    </div>
+                {{ form_end(cancelForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

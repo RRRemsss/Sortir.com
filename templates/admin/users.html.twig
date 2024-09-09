@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Utilisateurs{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-3">Gestion des utilisateurs</h1>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Pseudo</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{ user.id }}</th>
+            <form method="post" action="{{ path('admin_update_users', {'id': user.id}) }}">
+                <td><input type="text" name="username" value="{{ user.username }}" class="input-admin"></td>
+                <td><input type="text" name="lastname" value="{{ user.lastname }}" class="input-admin"></td>
+                <td><input type="text" name="firstname" value="{{ user.firstname }}" class="input-admin"></td>
+                <td><input type="text" name="phoneNumber" value="{{ user.phoneNumber }}" class="input-admin"></td>
+                <td><input type="email" name="email" value="{{ user.email }}" class="input-admin"></td>
+                <td>
+                    <select name="roles" class="input-admin">
+                        <option value="ROLE_ADMIN" {% if 'ROLE_ADMIN' in user.roles %}selected{% endif %}>Admin</option>
+                        <option value="ROLE_ORGANIZER" {% if 'ROLE_ORGANIZER' in user.roles %}selected{% endif %}>Organizer</option>
+                        <option value="ROLE_USER" {% if 'ROLE_USER' in user.roles %}selected{% endif %}>User</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="isActive" class="input-admin">
+                        <option value="1" {% if user.isActive %}selected{% endif %}>Actif</option>
+                        <option value="0" {% if not user.isActive %}selected{% endif %}>Bloqué</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit" class="valider"><i class="fa-solid fa-check"></i></button>
+            </form>
+                    <a href="#" onclick="confirmDelete('{{ path('admin_delete_user', {'id': user.id}) }}')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-dark">Retour</a>
+    <a href="{{ path('app_register') }}" class="btn btn-success">Ajouter</a>
+    <a href="{{ path('admin_add_users_csv') }}" class="btn btn-warning">CSV</a>
+
+</div>
+
+<script>
+    function confirmDelete(url) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+            window.location.href = url;
+        }
+    }
+</script>
+{% endblock %}

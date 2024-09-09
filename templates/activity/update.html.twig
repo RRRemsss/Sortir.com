@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}|Modifier une sortie{% endblock %}
+
+{% block body %}
+        <div class="container">
+            <h1 class="text-center mt-3">Modifier une sortie</h1>
+
+
+            {{ form_start(updateActivityForm) }}
+
+
+            {{ form_row(updateActivityForm.activityName) }}
+            {{ form_row(updateActivityForm.dateTimeStart) }}
+            {{ form_row(updateActivityForm.dateLimitInscription) }}
+            {{ form_row(updateActivityForm.nbMaxIncriptions) }}
+            {{ form_row(updateActivityForm.duration) }}
+            {{ form_row(updateActivityForm.activityDescription) }}
+            {{ form_row(updateActivityForm.campus) }}
+
+
+            {% if updateActivityForm.city is defined %}
+                    {{ form_row(updateActivityForm.city) }}
+                {% if updateActivityForm.postalCode is defined %}
+                    {{ form_row(updateActivityForm.postalCode) }}
+                {% endif %}
+            {% endif %}
+
+            {% if updateActivityForm.place is defined %}
+                <div class="form-group">
+                    <div class="d-flex align-items-center">
+                        {{ form_label(updateActivityForm.place) }}
+                        <a href="{{ path('place_create') }}" class="add"><i class="fa-solid fa-circle-plus"></i></a>
+                    </div>
+                    <div>
+                        <div class="mb-3">
+                            {{ form_widget(updateActivityForm.place) }}
+                        </div>
+                    </div>
+                </div>
+                {% if updateActivityForm.street is defined and updateActivityForm.latitude is defined and updateActivityForm.longitude is defined %}
+                    {{ form_row(updateActivityForm.street) }}
+                    {{ form_row(updateActivityForm.latitude) }}
+                    {{ form_row(updateActivityForm.longitude) }}
+                {% endif %}
+            {% endif%}
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <div class="d-inline-block">
+                        {{ form_row(updateActivityForm.submit) }}
+                    </div>
+                    <div class="d-inline-block">
+                        <a href="{{ path('main_home') }}" class="btn btn-dark mt-0">Annuler</a>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_end(updateActivityForm) }}
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center">
+                    <form method="post" action="{{ path('sortie_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette sortie ?');">
+                        <div class="col">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}

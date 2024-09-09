@@ -1,0 +1,16 @@
+{% if app.user %}
+<div class="py-3 text-bg-dark mt-auto">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="{{ path('main_home') }}" class="custom-nav nav-link px-2">Accueil</a></li>
+        <li class="nav-item">
+          <a class="nav-link custom-nav" href="{{ path('user_index', {'id': app.user.id}) }}">Profil | {{ app.user.username|title }}</a>
+        </li>
+        {% if is_granted("ROLE_ADMIN") %}
+            <li class="nav-item">
+                <a class="nav-link custom-nav" href="{{ path('admin_dashboard') }}">Admin</a>
+            </li>
+        {% endif %}
+    </ul>
+    <p class="text-center text-body-secondary-white">© {{'now'|date('Y') }} L'eni et Carl , inc</p>
+</div>
+{% endif %}

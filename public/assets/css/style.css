@@ -1,0 +1,181 @@
+.navbar-toggler-icon {
+    filter: invert(100%);
+}
+
+.card-subtitle {
+    font-style: italic;
+}
+
+.picto {
+    color: #1A1D20;
+    font-size: 7rem;
+    margin: 50px;
+}
+
+.picto:hover {
+    color: #1a1d20d5;
+    transition: 0.2s
+}
+
+.fa-trash, .fa-check {
+    color: #1A1D20;
+    font-size: 1.2rem;
+}
+
+.fa-plus {
+    color: #157347;
+    font-size: 1.2rem;
+}
+
+.input-admin {
+    border: #1a1d2031 1px solid;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.valider {
+    background: none;
+    border: none;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.container {
+    margin-bottom: 5%;
+}
+
+.bg-a {
+    background-color: #E9ECEF;
+}
+
+/* Error */
+.error {
+    font-size: 8rem;
+    text-align: center;
+}
+
+/* Flash */
+.flash {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.flash-error {
+    background-color: #F8D7DA;
+    border: solid 1px #F5C2C7;
+}
+
+.flash-success {
+    background-color: #D1E7DD;
+    border: solid 1px #BADBCC;
+}
+
+/* add */
+.add {
+    font-size: 1.2rem;
+    margin-left: 5px;
+    margin-bottom: 0.5rem;
+    color: #1A1D20;
+}
+
+.add:hover {
+    color: #1a1d20d5;
+    transition: 0.2s
+}
+
+.custom-image {
+    max-width: 100%;
+    height: auto;
+}
+
+/* User */
+.logo {
+    margin-right: 2em;
+}
+.custom-nav {
+    color: #ffffff;
+}
+
+.custom-nav:hover {
+    color: #a4a4a4;
+}
+
+.custom-header {
+    padding: 1em ;
+    margin-bottom: 1em;
+}
+.custom-image {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 30%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+label {
+    display: block;
+}
+
+.custom-image {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+.custom-image_2 {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+.testimonial-card .card-up {
+    height: 120px;
+    overflow: hidden;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.gradient {
+    background: rgba(84, 141, 222, 1.0);
+    background: linear-gradient(135deg, rgba(84, 141, 222, 1.0), rgba(189, 35, 74, 1.0));
+}
+
+.testimonial-card .avatar {
+    overflow: hidden;
+    margin-top: -60px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.easter-egg {
+    position: absolute;
+    bottom: -1%;
+    right: 20px;
+}
+
+.chat-image {
+    width: 150px;
+    height: auto;
+}
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.form-group {
+    min-height: 90px;
+}
+

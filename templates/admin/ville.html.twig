@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Villes{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-3">Gestion des villes</h1>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Code postal</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in cities %}
+            <tr>
+                <th scope="row">{{ city.id }}</th>
+                <form method="post" action="{{ path('admin_update_city', {'id': city.id}) }}">
+                    <td>
+                        <input type="text" name="cityName" value="{{ city.cityName }}" class="input-admin">
+                    </td>
+                    <td>
+                        <input type="text" name="postCode" value="{{ city.postCode }}" class="input-admin">
+                    </td>
+                    <td class="justify-content-end">
+                        <button type="submit" class="valider"><i class="fa-solid fa-check"></i></button>
+                        <a href="#" onclick="confirmDelete('{{ path('admin_delete_city', {'id': city.id}) }}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+            {# nouveau form ajout #}
+            <tr>
+                <th scope="row">#</th>
+                <form method="post" action="{{ path('admin_create_city') }}">
+                    <td>
+                        <input type="text" name="cityName" placeholder="Nom de la ville" class="input-admin">
+                    </td>
+                    <td>
+                        <input type="text" name="postCode" placeholder="Code postal" class="input-admin">
+                    </td>
+                    <td class="justify-content-end">
+                        <button type="submit" class="valider"><i class="fa-solid fa-plus"></i></button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-dark">Retour</a>
+    {# <a href="{{ path('city_create') }}" class="btn btn-success mt-3">Ajouter</a> #}
+
+</div>
+
+<script>
+    function confirmDelete(url) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette ville ?')) {
+            window.location.href = url;
+        }
+    }
+</script>
+{% endblock %}
